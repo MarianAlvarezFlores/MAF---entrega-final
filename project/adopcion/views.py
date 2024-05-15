@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Mascota
 from django.contrib.auth.decorators import login_required
 from .forms import BusquedaMascotasForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login
+from .forms import CargarMascotaForm
 
 def lista_mascotas(request):
     if request.method == 'GET':
@@ -32,3 +35,37 @@ def adoptar_mascota(request, mascota_id):
 def adoptar_mascota_exitosa(request):
     return render(request, 'adopcion_mascotas/adoptar_mascota_exitosa.html')
 
+def registro(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('lista_mascotas')  # Redirigir al usuario a la página principal después del registro
+    else:
+        form = UserCreationForm()
+    return render(request, 'adopcion_mascotas/registro.html', {'form': form})
+
+def inicio_sesion(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('lista_mascotas')  # Redirigir al usuario/a a la página principal después del inicio de sesión
+    else:
+        form = AuthenticationForm()
+    return render(request, 'adopcion_mascotas/inicio_sesion.html', {'form': form})
+
+@login_required
+def cargar_mascota(request):
+    if request.method == 'POST':
+        form = CargarMascotaForm(request.POST, request.FILES)
+        if form.is_valid():
+            mascota = form.save(commit=False)
+            mascota.usuario = request.user  # Usuario/a actual como adoptante de la mascota
+            mascota.save()
+            return redirect('lista_mascotas')  # Redirigir al usuario/a a la página principal después de cargar la mascota
+    else:
+        form = CargarMascotaForm()
+    return render(request, 'adopcion_mascotas/cargar_mascota.html', {'form': form})
