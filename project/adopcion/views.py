@@ -7,7 +7,7 @@ from django.contrib.auth import login
 from .forms import CargarMascotaForm
 
 def home(request):
-    return render(request, 'adopcion_mascotas/home.html')
+    return render(request, 'home.html')
 
 def lista_mascotas(request):
     if request.method == 'GET':
