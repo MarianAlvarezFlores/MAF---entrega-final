@@ -52,7 +52,7 @@ def registro(request):
             return redirect('lista_mascotas')  # Redirigir al usuario a la página principal después del registro
     else:
         form = UserCreationForm()
-    return render(request, 'adopcion_mascotas/registro.html', {'form': form})
+    return render(request, 'registro.html', {'form': form})
 
 def inicio_sesion(request):
     if request.method == 'POST':
@@ -60,10 +60,10 @@ def inicio_sesion(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('lista_mascotas')  # Redirigir al usuario/a a la página principal después del inicio de sesión
+            return redirect('home')  # Redirigir al usuario/a a la página principal después del inicio de sesión
     else:
         form = AuthenticationForm()
-    return render(request, 'adopcion_mascotas/inicio_sesion.html', {'form': form})
+    return render(request, 'inicio_sesion.html', {'form': form})
 
 @login_required
 def cargar_mascota(request):

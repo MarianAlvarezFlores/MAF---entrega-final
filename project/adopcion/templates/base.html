@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,14 +51,15 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="#">Inicio</a>
-        <a href="#">Mascotas</a>
-        <a href="#">Adoptar</a>
-        <a href="#">Contacto</a>
+        <a href="{% url 'home' %}">Inicio</a>
         {% if user.is_authenticated %}
-            <a href="#">Cerrar sesión</a>
+            <a href="{% url 'cargar_mascota' %}">Publicar mascota</a>
+            <a href="{% url 'lista_mascotas' %}">Adoptar</a>
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
         {% else %}
-            <a href="#">Iniciar sesión</a>
+            <a href="{% url 'inicio_sesion' %}">Iniciar sesión</a>
+            <a href="{% url 'registro' %}">Registrarse</a> 
+            <a href="{% url 'lista_mascotas' %}">Ver nuestras mascotas</a>
         {% endif %}
     </div>
 
