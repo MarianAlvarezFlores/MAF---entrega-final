@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adoptar Mascota</title>
+</head>
+<body>
+    <h1>Adoptar Mascota</h1>
+    <p>Nombre: {{ mascota.nombre }}</p>
+    <p>Especie: {{ mascota.especie }}</p>
+    <p>Edad: {{ mascota.edad }}</p>
+    <p>Descripción: {{ mascota.descripcion }}</p>
+    <!-- Formulario para adoptar la mascota -->
+    <form action="{% url 'adoptar_mascota' mascota.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Adoptar">
+    </form>
+</body>
+</html>
