@@ -6,6 +6,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
 from .forms import CargarMascotaForm
 
+def home(request):
+    return render(request, 'adopcion_mascotas/home.html')
+
 def lista_mascotas(request):
     if request.method == 'GET':
         form = BusquedaMascotasForm(request.GET)
@@ -15,13 +18,18 @@ def lista_mascotas(request):
             edad = form.cleaned_data.get('edad')
             tamaño = form.cleaned_data.get('tamaño')
             genero = form.cleaned_data.get('genero')
-            mascotas = Mascota.objects.filter(especie=especie, nombre__icontains=nombre, edad=edad, tamaño=tamaño, genero=genero)
+            mascotas = Mascota.objects.filter(especie=especie, nombre__icontains=nombre, edad=edad)
+            if tamaño:
+                mascotas = mascotas.filter(tamaño=tamaño)
+            if genero:
+                mascotas = mascotas.filter(genero=genero)
         else:
             mascotas = Mascota.objects.all()
     else:
         form = BusquedaMascotasForm()
         mascotas = Mascota.objects.all()
     return render (request, 'adopcion_mascotas/lista_mascotas.html', {'mascotas': mascotas, 'form': form})
+
 
 @login_required
 def adoptar_mascota(request, mascota_id):

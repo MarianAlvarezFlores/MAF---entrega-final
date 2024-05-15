@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Inicio - Mi Página{% endblock %}
+
+{% block content %}
+<h1>Bienvenido a Mi Página</h1>
+<p>Esta es la página de inicio. Aquí puedes encontrar información sobre nuestras mascotas disponibles para adopción.</p>
+
+<div>
+    <!-- Aquí puedes agregar contenido adicional, como imágenes o descripciones de mascotas -->
+    <h2>Nuestras Mascotas</h2>
+    {% if mascotas %}
+        <ul>
+            {% for mascota in mascotas %}
+                <li>{{ mascota.nombre }} - {{ mascota.especie }}</li>
+                <ul>
+                    <li>Edad: {{ mascota.edad }}</li>
+                    <li>Descripción: {{ mascota.descripcion }}</li>
+                    <!-- Agrega más detalles aquí si es necesario -->
+                </ul>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay mascotas disponibles en este momento.</p>
+    {% endif %}
+</div>
+{% endblock %}

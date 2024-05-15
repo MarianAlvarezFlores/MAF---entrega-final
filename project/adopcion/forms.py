@@ -13,4 +13,4 @@ class BusquedaMascotasForm(forms.Form):
 class CargarMascotaForm(forms.ModelForm):
     class Meta:
         model = Mascota
-        fields = ['nombre', 'especie', 'edad', 'tamaño', 'genero', 'descripcion', 'imagen1', 'imagen2', 'imagen3']
+        fields = ['nombre', 'especie', 'edad', 'descripcion', 'foto']  
